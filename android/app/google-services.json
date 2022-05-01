@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "715491560225",
+    "project_id": "skypec-1b6f9",
+    "storage_bucket": "skypec-1b6f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715491560225:android:cfe163ad8ea8d8a0414c60",
+        "android_client_info": {
+          "package_name": "com.example.skype_c"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715491560225-ndm0e90afc2a8j93rqgs24m624vm89m5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.skype_c",
+            "certificate_hash": "2dffdebae4839bf8fc75069018fcbd5be4e44ee0"
+          }
+        },
+        {
+          "client_id": "715491560225-ivfumvcd5phe1o4pbbm66td5v7dj5kt8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoCO3lRb7okLa31FJuSzDL59E2BOf6Iec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715491560225-ivfumvcd5phe1o4pbbm66td5v7dj5kt8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
