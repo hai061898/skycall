@@ -17,7 +17,7 @@ class UserR {
     this.profilePhoto,
   });
 
-  Map toMap(UserR user) {
+  Map<String, dynamic>  toMap(UserR user) {
     var data = <String, dynamic>{};
     data['uid'] = user.uid;
     data['name'] = user.name;
