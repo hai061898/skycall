@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:skype_c/data/models/use_respone.dart' as model;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:skype_c/provider/image_upload_provider.dart';
 
 import 'chat_methods.dart';
 
