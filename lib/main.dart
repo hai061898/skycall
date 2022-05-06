@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:skype_c/data/firebase/firebase_repository.dart';
+
 
 void main() => runApp(const MyApp());
 

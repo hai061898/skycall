@@ -9,7 +9,7 @@ class Contact {
     this.addedOn,
   });
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap(Contact senderContact) => {
         'uid': uid,
         'added_on': addedOn,
       };
