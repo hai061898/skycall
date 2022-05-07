@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:skype_c/data/models/contact_response.dart';
 import 'package:skype_c/data/models/message_response.dart';
+import 'package:skype_c/data/models/use_respone.dart';
 import 'package:skype_c/utils/string_c.dart';
 
 class ChatMethods {
@@ -13,7 +14,7 @@ class ChatMethods {
       _firestore.collection(USERS_COLLECTION);
 
   Future<DocumentReference<Map<String, dynamic>>> addMessageToDb(
-    Message message,
+    Message message, User sender, User? receiver,
   ) async {
     var map = message.toMap();
 
