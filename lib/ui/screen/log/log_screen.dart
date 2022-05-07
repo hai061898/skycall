@@ -34,7 +34,7 @@ class LogScreen extends StatelessWidget {
             child: LogListContainer(),
           ),
         ),
-        floatingActionButton: FloatingColumn(),
+        floatingActionButton: const FloatingColumn(),
       ),
     );
   }

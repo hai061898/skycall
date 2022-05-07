@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:skype_c/ui/themes/universal_variables.dart';
 
 class FloatingColumn extends StatelessWidget {
+  const FloatingColumn({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(

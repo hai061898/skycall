@@ -1,63 +1,102 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:skype_c/data/firebase/firebase_repository.dart';
+import 'package:skype_c/data/firebase/auth_methods.dart.dart';
+import 'package:skype_c/ui/screen/home/home_page.dart';
+import 'package:skype_c/ui/themes/universal_variables.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
-  FirebaseRepository repository = FirebaseRepository();
+class _LoginScreenState extends State<LoginScreen> {
+  final AuthMethods _authMethods = AuthMethods();
+
+  bool isLoginPressed = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: loginButton(),
+      backgroundColor: UniversalVariables.blackColor,
+      body: Stack(
+        children: [
+          Center(
+            child: loginButton(),
+          ),
+          isLoginPressed
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Container()
+        ],
+      ),
     );
   }
 
   Widget loginButton() {
-    return TextButton(
-      child: const Text(
-        "LOGIN",
-        style: TextStyle(
-            fontSize: 35, fontWeight: FontWeight.w900, letterSpacing: 1.2),
+    return Shimmer.fromColors(
+      baseColor: Colors.white,
+      highlightColor: UniversalVariables.senderColor,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        child: const Text(
+          'LOGIN',
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
+          ),
+        ),
+        onPressed: () => performLogin(),
       ),
-      onPressed: () => performLogin(),
     );
   }
 
   void performLogin() {
     // ignore: avoid_print
-    print("tring to perform login");
-    repository.signIn().then((User user) {
-      // ignore: unnecessary_null_comparison
+    print('tring to perfrom login');
+
+    setState(() {
+      isLoginPressed = true;
+    });
+
+    _authMethods.signIn().then((User user) {
       if (user != null) {
-        authenticateUser(user);
+        authenicateUser(user);
       } else {
-        // ignore: avoid_print
-        print("There was an error");
+        print('There was an error');
       }
     });
   }
 
-  void authenticateUser(User user) {
-    repository.authenticateUser(user).then((isNewUser) {
+  void authenicateUser(User user) {
+    _authMethods.authenicateUser(user).then((isNewUser) {
+      setState(() {
+        isLoginPressed = false;
+      });
+
       if (isNewUser) {
-        repository.addDataToDb(user).then((value) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          }));
+        _authMethods.addDataToDb(user).then((value) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const HomeScreen();
+            }),
+          );
         });
       } else {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeScreen();
-        }));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return const HomeScreen();
+          }),
+        );
       }
     });
   }

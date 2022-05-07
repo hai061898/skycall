@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:skype_c/data/firebase/auth_methods.dart.dart';
+import 'package:skype_c/ui/screen/chat/chat_page.dart';
 import 'package:skype_c/ui/themes/universal_variables.dart';
 import 'package:skype_c/data/models/use_respone.dart' as model;
 import 'package:skype_c/ui/widgets/tile_c.dart';
