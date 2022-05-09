@@ -4,9 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:skype_c/data/firebase/chat_methods.dart';
 import 'package:skype_c/data/models/contact_response.dart';
 import 'package:skype_c/provider/user_provider.dart';
+import 'package:skype_c/ui/screen/chat/components/contact_view.dart';
+import 'package:skype_c/ui/screen/chat/components/user_circle.dart';
 import 'package:skype_c/ui/themes/universal_variables.dart';
 import 'package:skype_c/ui/widgets/skype_appbar.dart';
 
+import 'components/new_chat_button.dart';
 import 'components/quiet_box.dart';
 
 class ChatListScreen extends StatelessWidget {
@@ -17,8 +20,8 @@ class ChatListScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: UniversalVariables.blackColor,
       appBar: SkypeAppBar(
-        title: UserCircle(),
-        actions: <Widget>[
+        title: const UserCircle(),
+        actions: [
           IconButton(
             icon: const Icon(
               Icons.search,
@@ -37,8 +40,8 @@ class ChatListScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: NewChatButton(),
-      body: const ChatListContainer(),
+      floatingActionButton: const NewChatButton(),
+      body: ChatListContainer(),
     );
   }
 }
@@ -46,7 +49,7 @@ class ChatListScreen extends StatelessWidget {
 class ChatListContainer extends StatelessWidget {
   final ChatMethods _chatMethods = ChatMethods();
 
-  const ChatListContainer({Key? key}) : super(key: key);
+  ChatListContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +79,7 @@ class ChatListContainer extends StatelessWidget {
               },
             );
           }
-          return const Center(child: const CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
