@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +25,9 @@ class PickupLayout extends StatelessWidget {
             stream: callMethods.callStream(uid: userProvider.getUser.uid),
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data!.data() != null) {
-                Call call = Call.fromMap(snapshot.data!.data());
-                if (!call.hasDialled) {
+                Call call =
+                    Call.fromMap(snapshot.data!.data() as Map<String, dynamic>);
+                if (call.hasDialled!) {
                   return PickupScreen(call: call);
                 }
                 return scaffold;

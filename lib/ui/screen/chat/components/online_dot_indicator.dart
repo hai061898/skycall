@@ -13,8 +13,8 @@ class OnlineDotIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getColor(int state) {
-      switch (Utils.numToState(state)) {
+    getColor(int? state) {
+      switch (Utils.numToState(state!)) {
         case UserState.Offline:
           return Colors.red;
 
@@ -29,9 +29,10 @@ class OnlineDotIndicator extends StatelessWidget {
     return StreamBuilder<DocumentSnapshot>(
       stream: _authMethods.getUserStream(uid: uid),
       builder: (context, snapshot) {
-        model.User user;
-        if (snapshot.hasData && snapshot.data?.data() != null) {
-          user = model.User.fromMap(snapshot.data.data() );
+        model.User? user;
+        if (snapshot.hasData && snapshot.data!.data() != null) {
+          user =
+              model.User.fromMap(snapshot.data!.data() as Map<String, dynamic>);
         }
 
         return Container(
@@ -40,7 +41,7 @@ class OnlineDotIndicator extends StatelessWidget {
           margin: const EdgeInsets.only(right: 5, top: 5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: getColor(user.state!),
+            color: getColor(user!.state!),
           ),
         );
       },

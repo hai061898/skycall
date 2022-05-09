@@ -169,7 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
-    Message _message = Message.fromMap(snapshot.data());
+    Message _message = Message.fromMap(snapshot.data()as Map<String,dynamic>);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 15),
@@ -213,7 +213,7 @@ class _ChatScreenState extends State<ChatScreen> {
           );
     } else {
       return CachedImage(
-            message.photoUrl,
+            message.photoUrl!,
             height: 250,
             width: 250,
             radius: 10,
@@ -261,14 +261,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Row(
                   children: [
-                    FlatButton(
+                    TextButton(
                       child: const Icon(Icons.close),
                       onPressed: () => Navigator.maybePop(context),
                     ),
                     const Expanded(
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: const Text(
+                        child:  Text(
                           'Content and tools',
                           style: TextStyle(
                             color: Colors.white,
@@ -351,7 +351,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     color: Colors.white,
                   ),
                   onChanged: (val) {
-                    (val.length > 0 && val.trim() != '')
+                    (val.isNotEmpty && val.trim() != '')
                         ? setWritingTo(true)
                         : setWritingTo(false);
                   },
@@ -459,6 +459,7 @@ class _ChatScreenState extends State<ChatScreen> {
         }),
       );
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }

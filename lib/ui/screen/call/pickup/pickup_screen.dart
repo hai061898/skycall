@@ -58,7 +58,7 @@ class _PickupScreenState extends State<PickupScreen> {
             ),
             const SizedBox(height: 50),
             CachedImage(
-              widget.call.callerPic,
+              widget.call.callerPic!,
               isRound: true,
               radius: 180,
             ),

@@ -6,9 +6,11 @@ import 'package:skype_c/data/models/contact_response.dart';
 import 'package:skype_c/data/models/use_respone.dart' as model;
 import 'package:skype_c/provider/user_provider.dart';
 import 'package:skype_c/ui/screen/chat/chat_page.dart';
+import 'package:skype_c/ui/screen/chat/components/online_dot_indicator.dart';
 import 'package:skype_c/ui/widgets/tile_c.dart';
 
 import 'cached_image.dart';
+import 'last_message_container.dart';
 
 class ContactView extends StatelessWidget {
   final Contact contact;
@@ -18,7 +20,7 @@ class ContactView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<model.User>(
+    return FutureBuilder<model.User?>(
       future: _authMethods.getUserDetailsById(contact.uid),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -56,18 +58,18 @@ class ViewLayout extends StatelessWidget {
       ),
       subtitle: LastMessageContainer(
         stream: _chatMethods.fetchLastMessageBetween(
-            senderId: userProvider.getUser.uid, receiverId: contact.uid),
+            senderId: userProvider.getUser.uid!, receiverId: contact.uid!),
       ),
       leading: Container(
         constraints: const BoxConstraints(maxHeight: 60, maxWidth: 60),
         child: Stack(
           children: <Widget>[
             CachedImage(
-              contact.profilePhoto,
+              contact.profilePhoto!,
               radius: 80,
               isRound: true,
             ),
-            OnlineDotIndicator(uid: contact.uid)
+            OnlineDotIndicator(uid: contact.uid!)
           ],
         ),
       ),

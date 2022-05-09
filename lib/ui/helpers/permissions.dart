@@ -3,30 +3,31 @@ import 'package:flutter/services.dart';
 
 class Permissions {
   static Future<bool> cameraAndMicrophonePermissionsGranted() async {
-    Object cameraPermissionStatus = await _getCameraPermission();
-    Object microphonePermissionStatus =
-        await _getMicrophonePermission();
+    PermissionStatus? cameraPermissionStatus =
+        (await _getCameraPermission()) as PermissionStatus?;
+    PermissionStatus? microphonePermissionStatus =
+        await _getMicrophonePermission() as PermissionStatus?;
 
     if (cameraPermissionStatus == PermissionStatus.granted &&
         microphonePermissionStatus == PermissionStatus.granted) {
       return true;
     } else {
       _handleInvalidPermissions(
-          cameraPermissionStatus: cameraPermissionStatus,
-          microphonePermissionStatus: microphonePermissionStatus);
+          cameraPermissionStatus: cameraPermissionStatus!,
+          microphonePermissionStatus: microphonePermissionStatus!);
       return false;
     }
   }
 
   static Future<bool> microphonePermissonsGranted() async {
-    Object microphonePermissionStatus =
-        await _getMicrophonePermission();
+    Object microphonePermissionStatus = await _getMicrophonePermission();
 
     if (microphonePermissionStatus == PermissionStatus.granted) {
       return true;
     } else {
       _handleInvalidPermissions(
-          microphonePermissionStatus: microphonePermissionStatus, cameraPermissionStatus:[]);
+          microphonePermissionStatus:
+              microphonePermissionStatus as PermissionStatus?);
       return false;
     }
   }
@@ -54,17 +55,17 @@ class Permissions {
   }
 
   static void _handleInvalidPermissions({
-     required PermissionStatus cameraPermissionStatus,
-     required PermissionStatus microphonePermissionStatus,
+    PermissionStatus? cameraPermissionStatus,
+    PermissionStatus? microphonePermissionStatus,
   }) async {
     if (cameraPermissionStatus == PermissionStatus.denied &&
         microphonePermissionStatus == PermissionStatus.denied) {
-      throw  PlatformException(
+      throw PlatformException(
           code: "PERMISSION_DENIED",
           message: "Access to camera and microphone denied",
           details: null);
     } else if (await Permission.location.serviceStatus.isEnabled) {
-      throw  PlatformException(
+      throw PlatformException(
           code: "PERMISSION_DISABLED",
           message: "Location data is not available on device",
           details: null);

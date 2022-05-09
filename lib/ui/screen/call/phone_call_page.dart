@@ -91,14 +91,14 @@ class _PhoneCallScreenState extends State<PhoneCallScreen> {
       callStreamSubscription = callMethods
           .callStream(uid: userProvider.getUser.uid)
           .listen((DocumentSnapshot ds) {
-        switch (ds.data) {
-          case :
-            // snapshot is null which means that call is hanged and documents are deleted
-            Navigator.pop(context);
-            break;
-          default:
-            break;
-        }
+        // switch (ds.data) {
+        //   case null:
+        //     // snapshot is null which means that call is hanged and documents are deleted
+        //     Navigator.pop(context);
+        //     break;
+        //   default:
+        //     break;
+        // }
 
         if (ds.data() == null) {
           Navigator.pop(context);

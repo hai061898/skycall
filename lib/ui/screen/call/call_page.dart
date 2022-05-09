@@ -1,11 +1,14 @@
-// ignore_for_file: library_prefixes
+// ignore_for_file: library_prefixes, unused_import
 
 import 'dart:async';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 import 'package:skype_c/data/configs/agora_configs.dart';
 import 'package:skype_c/data/firebase/call_methods.dart';
 import 'package:skype_c/data/models/call_response.dart';
@@ -56,9 +59,9 @@ class _CallScreenState extends State<CallScreen> {
     // ignore: deprecated_member_use
     await _engine.enableWebSdkInteroperability(true);
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
-    configuration.dimensions = VideoDimensions(1920, 1080);
+    // configuration.dimensions = VideoDimensions(1920, 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(null, widget.call.channelI!, null, 0);
+    // await _engine.joinChannel(null, widget.call.channelI, null, 0);
   }
 
   /// Create agora sdk instance and initialize
@@ -115,20 +118,20 @@ class _CallScreenState extends State<CallScreen> {
   }
 
   addPostFrameCallback() {
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
       userProvider = Provider.of<UserProvider>(context, listen: false);
 
       callStreamSubscription = callMethods
           .callStream(uid: userProvider.getUser.uid)
           .listen((DocumentSnapshot ds) {
-        switch (ds.data) {
-          case null:
-            // snapshot is null which means that call is hanged and documents are deleted
-            Navigator.pop(context);
-            break;
-          default:
-            break;
-        }
+        // switch (ds.data) {
+        //   case null:
+        //     // snapshot is null which means that call is hanged and documents are deleted
+        //     Navigator.pop(context);
+        //     break;
+        //   default:
+        //     break;
+        // }
 
         if (ds.data() == null) {
           Navigator.pop(context);
@@ -181,8 +184,9 @@ class _CallScreenState extends State<CallScreen> {
     if (widget.role == ClientRole.Broadcaster) {
       list.add(const RtcLocalView.SurfaceView());
     }
-    for (var uid in _users) {
-      list.add(RtcRemoteView.SurfaceView(uid: uid));
+    // ignore: unused_local_variable
+    for (var k in _users) {
+      // list.add(RtcRemoteView.SurfaceView(uid: uid));
     }
     return list;
   }

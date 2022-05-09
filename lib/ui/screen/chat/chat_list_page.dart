@@ -73,7 +73,8 @@ class ChatListContainer extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               itemCount: docList.length,
               itemBuilder: (context, index) {
-                Contact contact = Contact.fromMap(docList[index].data());
+                Contact contact = Contact.fromMap(
+                    docList[index].data() as Map<String, dynamic>);
 
                 return ContactView(contact);
               },

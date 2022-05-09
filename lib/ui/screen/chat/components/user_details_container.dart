@@ -20,7 +20,7 @@ class UserDetailsContainer extends StatelessWidget {
       if (isLoggedOut) {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
           (Route<dynamic> route) => false,
         );
       }

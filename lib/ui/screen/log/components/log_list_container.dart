@@ -68,21 +68,25 @@ class _LogListContainerState extends State<LogListContainer> {
                   bool hasDialled = _log.callStatus == CALL_STATUS_DIALLED;
                   return CustomTile(
                     leading: CachedImage(
-                      hasDialled ? _log.receiverPic : _log.callerPic,
+                      hasDialled
+                          ? _log.receiverPic.toString()
+                          : _log.callerPic.toString(),
                       isRound: true,
                       radius: 45,
                     ),
                     mini: false,
                     title: Text(
-                      hasDialled ? _log.receiverName : _log.callerName,
+                      hasDialled
+                          ? _log.receiverName.toString()
+                          : _log.callerName.toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
                     ),
-                    icon: getIcon(_log.callStatus),
+                    icon: getIcon(_log.callStatus.toString()),
                     subtitle: Text(
-                      Utils.formatDateString(_log.timestamp),
+                      Utils.formatDateString(_log.timestamp.toString()),
                       style: const TextStyle(
                         fontSize: 13,
                       ),
