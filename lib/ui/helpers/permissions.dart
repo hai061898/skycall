@@ -26,7 +26,7 @@ class Permissions {
       return true;
     } else {
       _handleInvalidPermissions(
-          microphonePermissionStatus: microphonePermissionStatus, cameraPermissionStatus: null);
+          microphonePermissionStatus: microphonePermissionStatus, cameraPermissionStatus:[]);
       return false;
     }
   }

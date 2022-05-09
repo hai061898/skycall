@@ -66,10 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoginPressed = true;
     });
 
-    _authMethods.signIn().then((User user) {
+    _authMethods.signIn().then((User? user) {
+      // ignore: unnecessary_null_comparison
       if (user != null) {
         authenicateUser(user);
       } else {
+        // ignore: avoid_print
         print('There was an error');
       }
     });

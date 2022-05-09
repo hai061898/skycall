@@ -11,6 +11,9 @@ import 'package:skype_c/data/local_db/repository/log_repository.dart';
 import 'package:skype_c/data/models/use_respone.dart' as model;
 import 'package:skype_c/provider/user_provider.dart';
 import 'package:skype_c/ui/screen/call/pickup/pickup_layout.dart';
+import 'package:skype_c/ui/screen/chat/chat_list_page.dart';
+import 'package:skype_c/ui/screen/chat/chat_page.dart';
+import 'package:skype_c/ui/screen/log/log_screen.dart';
 import 'package:skype_c/ui/themes/universal_variables.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,23 +34,23 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
+    SchedulerBinding.instance?.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.refreshUser();
 
       _authMethods.setUserState(
-        userId: userProvider.getUser.uid,
+        userId: userProvider.getUser.uid!,
         userState: UserState.Online,
       );
-      LogRepository.init(isHive: true, dbName: userProvider.getUser.uid);
+      LogRepository.init(isHive: true, dbName: userProvider.getUser.uid!);
     });
     WidgetsBinding.instance!.addObserver(this);
 
     pageController = PageController();
 
-    FirebaseMessaging.instance?
+    FirebaseMessaging.instance
         .getInitialMessage()
-        .then((RemoteMessage message) async {
+        .then((RemoteMessage? message) async {
       if (message != null) {
         _user = (await _authMethods.getUserDetailsById(message.data['user_uid']))!;
 
@@ -63,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      _user = await _authMethods.getUserDetailsById(message.data['user_uid']);
+      _user = (await _authMethods.getUserDetailsById(message.data['user_uid']))!;
 
       Navigator.push(
         context,
@@ -73,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         ),
       );
+      // ignore: avoid_print
       print('A new onMessageOpenedApp event was published!');
     });
   }
@@ -97,24 +101,28 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         currentUserId != null
             ? _authMethods.setUserState(
                 userId: currentUserId, userState: UserState.Online)
+            // ignore: avoid_print
             : print("resume state");
         break;
       case AppLifecycleState.inactive:
         currentUserId != null
             ? _authMethods.setUserState(
                 userId: currentUserId, userState: UserState.Offline)
+            // ignore: avoid_print
             : print("inactive state");
         break;
       case AppLifecycleState.paused:
         currentUserId != null
             ? _authMethods.setUserState(
                 userId: currentUserId, userState: UserState.Waiting)
+            // ignore: avoid_print
             : print("paused state");
         break;
       case AppLifecycleState.detached:
         currentUserId != null
             ? _authMethods.setUserState(
                 userId: currentUserId, userState: UserState.Offline)
+            // ignore: avoid_print
             : print("detached state");
         break;
     }
@@ -138,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       scaffold: Scaffold(
         backgroundColor: UniversalVariables.blackColor,
         body: PageView(
-          children: [
+          children: const [
             ChatListScreen(),
             LogScreen(),
             Center(

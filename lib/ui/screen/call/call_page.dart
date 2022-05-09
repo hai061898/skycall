@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'dart:async';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
@@ -205,12 +207,12 @@ class _CallScreenState extends State<CallScreen> {
     final views = _getRenderViews();
     switch (views.length) {
       case 1:
-        return Container(
+        return SizedBox(
             child: Column(
           children: <Widget>[_videoView(views[0])],
         ));
       case 2:
-        return Container(
+        return SizedBox(
             child: Column(
           children: <Widget>[
             _expandedVideoRow([views[0]]),
@@ -218,7 +220,7 @@ class _CallScreenState extends State<CallScreen> {
           ],
         ));
       case 3:
-        return Container(
+        return SizedBox(
             child: Column(
           children: <Widget>[
             _expandedVideoRow(views.sublist(0, 2)),
@@ -226,7 +228,7 @@ class _CallScreenState extends State<CallScreen> {
           ],
         ));
       case 4:
-        return Container(
+        return SizedBox(
             child: Column(
           children: <Widget>[
             _expandedVideoRow(views.sublist(0, 2)),
@@ -252,7 +254,7 @@ class _CallScreenState extends State<CallScreen> {
             itemCount: _infoStrings.length,
             itemBuilder: (BuildContext context, int index) {
               if (_infoStrings.isEmpty) {
-                return null;
+                return const SizedBox();
               }
               return Padding(
                 padding: const EdgeInsets.symmetric(

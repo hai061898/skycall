@@ -1,6 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:skype_c/data/firebase/auth_methods.dart.dart';
 import 'package:skype_c/provider/image_upload_provider.dart';
@@ -8,15 +12,16 @@ import 'package:skype_c/provider/user_provider.dart';
 import 'package:skype_c/ui/screen/home/home_page.dart';
 import 'package:skype_c/ui/screen/login/login_page.dart';
 import 'package:skype_c/ui/screen/search/search_page.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+import 'package:firebase_core/firebase_core.dart';
+// ignore: library_prefixes
+// import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
+  // ignore: avoid_print
   print("Handling a background message ${message.messageId}");
 }
 
@@ -58,11 +63,12 @@ void main() async {
     sound: true,
   );
 
-  await DotEnv.load(fileName: '.env');
+  await dotenv.load(fileName: '.env');
 
   runApp(MyApp());
 }
 
+// ignore: use_key_in_widget_constructors
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -71,8 +77,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   static const METHOD_CHANNEL_NAME = "com.example.skype_clone/call";
   static const METHOD_EVENT_NAME = "com.example.skype_clone/call_event";
-  static const _methodChannel = const MethodChannel(METHOD_CHANNEL_NAME);
-  static const _eventChannel = const EventChannel(METHOD_EVENT_NAME);
+  // ignore: unused_field
+  static const _methodChannel = MethodChannel(METHOD_CHANNEL_NAME);
+  static const _eventChannel = EventChannel(METHOD_EVENT_NAME);
 
   final AuthMethods _authMethods = AuthMethods();
 
@@ -91,8 +98,8 @@ class _MyAppState extends State<MyApp> {
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,
-              channel.description,
-              // TODO add a proper drawable resource to android, for now using
+              // channel.description,
+
               //      one that already exists in example app.
               icon: 'launch_background',
             ),
@@ -102,6 +109,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     _eventChannel.receiveBroadcastStream().listen((event) {
+      // ignore: avoid_print
       print("EVENT CHANNEL $event");
     });
 
@@ -120,7 +128,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/search_screen': (context) => SearchScreen(),
+            '/search_screen': (context) => const SearchScreen(),
           },
           theme: ThemeData(
             brightness: Brightness.dark,
@@ -129,9 +137,9 @@ class _MyAppState extends State<MyApp> {
             future: _authMethods.getCurrentUser(),
             builder: (context, AsyncSnapshot<User> snapshot) {
               if (snapshot.hasData) {
-                return HomeScreen();
+                return const HomeScreen();
               } else {
-                return LoginScreen();
+                return const LoginScreen();
               }
             },
           )),

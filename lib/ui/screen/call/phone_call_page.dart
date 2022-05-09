@@ -62,7 +62,7 @@ class _PhoneCallScreenState extends State<PhoneCallScreen> {
       // ignore: avoid_print
       print('userOffline $uid');
       setState(() {
-        _remoteUid = null;
+        _remoteUid = 0;
       });
     }));
     // Join channel 123
@@ -92,7 +92,7 @@ class _PhoneCallScreenState extends State<PhoneCallScreen> {
           .callStream(uid: userProvider.getUser.uid)
           .listen((DocumentSnapshot ds) {
         switch (ds.data) {
-          case null:
+          case :
             // snapshot is null which means that call is hanged and documents are deleted
             Navigator.pop(context);
             break;
@@ -108,6 +108,7 @@ class _PhoneCallScreenState extends State<PhoneCallScreen> {
   }
 
   // Create a simple chat UI
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Agora Audio quickstart',
